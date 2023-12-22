@@ -99,6 +99,20 @@ async function run() {
         const result = await tasksCollection.deleteOne(query);
         res.send(result);
       })
+    //api for patch
+    app.patch('/tasks/:id', async(req, res) =>{
+        const id = req.params.id;
+        const filter = {_id: new ObjectId(id)}
+        const updateData = req.body;
+        console.log(updateData);
+        const updateDoc = {
+            $set: {
+                status: updateData.status,
+            },
+          };
+        const result = await tasksCollection.updateOne(filter, updateDoc);
+        res.send(result);
+    })
 
 
     // Send a ping to confirm a successful connection
